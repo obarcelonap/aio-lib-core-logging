@@ -12,6 +12,11 @@ governing permissions and limitations under the License.
 const winston = require('winston')
 const getWinstonTransports = require('./winstonTransports')
 
+function buildEntry (data, fields) {
+  const [message = '', stmtFields = {}] = data
+  return { message, ...fields, ...stmtFields }
+}
+
 class WinstonStructuredLogger {
   constructor (config) {
     this.fields = config.fields || {}
@@ -27,39 +32,13 @@ class WinstonStructuredLogger {
     })
   }
 
-  close () {
-    this.logger.close()
-  }
-
-  error (...data) {
-    const [message = '', stmtFields = {}] = data
-    this.logger.error({ message, ...this.fields, ...stmtFields })
-  }
-
-  warn (...data) {
-    const [message = '', stmtFields = {}] = data
-    this.logger.warn({ message, ...this.fields, ...stmtFields })
-  }
-
-  info (...data) {
-    const [message = '', stmtFields = {}] = data
-    this.logger.info({ message, ...this.fields, ...stmtFields })
-  }
-
-  verbose (...data) {
-    const [message = '', stmtFields = {}] = data
-    this.logger.verbose({ message, ...this.fields, ...stmtFields })
-  }
-
-  debug (...data) {
-    const [message = '', stmtFields = {}] = data
-    this.logger.debug({ message, ...this.fields, ...stmtFields })
-  }
-
-  silly (...data) {
-    const [message = '', stmtFields = {}] = data
-    this.logger.silly({ message, ...this.fields, ...stmtFields })
-  }
+  close () { this.logger.close() }
+  error (...data) { this.logger.error(buildEntry(data, this.fields)) }
+  warn (...data) { this.logger.warn(buildEntry(data, this.fields)) }
+  info (...data) { this.logger.info(buildEntry(data, this.fields)) }
+  verbose (...data) { this.logger.verbose(buildEntry(data, this.fields)) }
+  debug (...data) { this.logger.debug(buildEntry(data, this.fields)) }
+  silly (...data) { this.logger.silly(buildEntry(data, this.fields)) }
 }
 
 module.exports = WinstonStructuredLogger
