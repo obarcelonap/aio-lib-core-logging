@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Adobe. All rights reserved.
+Copyright 2026 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,6 +12,15 @@ governing permissions and limitations under the License.
 const winston = require('winston')
 const getWinstonTransports = require('./winstonTransports')
 
+/**
+ * Builds a structured log entry object from log method arguments and fields.
+ * Statement-level fields (second element of data) are merged over logger-level
+ * fields, so per-call values take precedence on key collision.
+ *
+ * @param {Array} data - arguments passed to a log method: [message, stmtFields?]
+ * @param {object} fields - logger-level fields set at construction time
+ * @returns {object} log entry ready to pass to winston
+ */
 function buildEntry (data, fields) {
   const [message = '', stmtFields = {}] = data
   return { message, ...fields, ...stmtFields }
