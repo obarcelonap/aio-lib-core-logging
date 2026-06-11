@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 const winston = require('winston')
-const util = require('node:util')
 const getWinstonTransports = require('./winstonTransports')
 
 class WinstonStructuredLogger {
@@ -33,33 +32,33 @@ class WinstonStructuredLogger {
   }
 
   error (...data) {
-    const [msg = '', stmtFields = {}] = data
-    this.logger.error({ message: util.format(msg), ...this.fields, ...stmtFields })
+    const [message = '', stmtFields = {}] = data
+    this.logger.error({ message, ...this.fields, ...stmtFields })
   }
 
   warn (...data) {
-    const [msg = '', stmtFields = {}] = data
-    this.logger.warn({ message: util.format(msg), ...this.fields, ...stmtFields })
+    const [message = '', stmtFields = {}] = data
+    this.logger.warn({ message, ...this.fields, ...stmtFields })
   }
 
   info (...data) {
-    const [msg = '', stmtFields = {}] = data
-    this.logger.info({ message: util.format(msg), ...this.fields, ...stmtFields })
+    const [message = '', stmtFields = {}] = data
+    this.logger.info({ message, ...this.fields, ...stmtFields })
   }
 
   verbose (...data) {
-    const [msg = '', stmtFields = {}] = data
-    this.logger.verbose({ message: util.format(msg), ...this.fields, ...stmtFields })
+    const [message = '', stmtFields = {}] = data
+    this.logger.verbose({ message, ...this.fields, ...stmtFields })
   }
 
   debug (...data) {
-    const [msg = '', stmtFields = {}] = data
-    this.logger.debug({ message: util.format(msg), ...this.fields, ...stmtFields })
+    const [message = '', stmtFields = {}] = data
+    this.logger.debug({ message, ...this.fields, ...stmtFields })
   }
 
   silly (...data) {
-    const [msg = '', stmtFields = {}] = data
-    this.logger.silly({ message: util.format(msg), ...this.fields, ...stmtFields })
+    const [message = '', stmtFields = {}] = data
+    this.logger.silly({ message, ...this.fields, ...stmtFields })
   }
 }
 
